@@ -7,12 +7,16 @@ echo "Installing Homebrew packages..."
 brew bundle --file "$DOTFILES/Brewfile"
 
 echo "Stowing dotfiles..."
-cd "$DOTFILES/packages"
 
-for pkg in */ ; do
-  pkg="${pkg%/}"
+for pkg in "$DOTFILES/packages"/*; do
+  pkg="$(basename "$pkg")"
   echo "Stowing $pkg"
-  stow --restow "$pkg"
+
+  stow \
+    --dir="$DOTFILES/packages" \
+    --target="$HOME" \
+    --restow \
+    "$pkg"
 done
 
 cd "$DOTFILES"
