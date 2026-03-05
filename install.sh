@@ -24,7 +24,11 @@ cd "$DOTFILES"
 echo "Installing rustup..."
 
 if ! command -v rustup >/dev/null; then
-  curl https://sh.rustup.rs -sSf | sh -s -- -y
+  curl --proto '=https' --tlsv1.2 https://sh.rustup.rs -sSf | sh
+fi
+
+if ! command -v xcode-select >/dev/null; then
+  xcode-select --install
 fi
 
 echo "Installing Rust toolchain..."
@@ -33,6 +37,8 @@ rustup default stable
 
 echo "Installing runtimes via mise..."
 mise install
+
+eval "$(mise activate bash)"
 
 echo "Installing global npm tools..."
 npm install -g typescript

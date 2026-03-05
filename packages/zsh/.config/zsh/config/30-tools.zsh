@@ -2,6 +2,9 @@
 export HOMEBREW_INSTALL_CLEANUP=1
 export HOMEBREW_NO_INSTALL_CLEANUP=0
 
+# add cargo to path
+export PATH="$XDG_DATA_HOME/cargo/bin:$PATH"
+
 # activate mise
 eval "$(mise activate zsh)"
 
