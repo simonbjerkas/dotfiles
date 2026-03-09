@@ -1,9 +1,5 @@
 # Brew autocleanup
 export HOMEBREW_INSTALL_CLEANUP=1
-export HOMEBREW_NO_INSTALL_CLEANUP=0
-
-# add cargo to path
-export PATH="$XDG_DATA_HOME/cargo/bin:$PATH"
 
 # activate mise
 eval "$(mise activate zsh)"
@@ -12,12 +8,17 @@ eval "$(mise activate zsh)"
 eval "$(zoxide init zsh)"
 
 # gpg support
-export GPG_TTY=$(tty)
+export GPG_TTY="$(tty)"
 
 # fzf integration
-if command -v fzf >/dev/null; then
-  source "$(brew --prefix)/opt/fzf/shell/completion.zsh"
-  source "$(brew --prefix)/opt/fzf/shell/key-bindings.zsh"
+if command -v brew >/dev/null; then
+  BREW_PREFIX="$(brew --prefix)"
+
+  [[ -f "$BREW_PREFIX/opt/fzf/shell/completion.zsh" ]] &&
+    source "$BREW_PREFIX/opt/fzf/shell/completion.zsh"
+
+  [[ -f "$BREW_PREFIX/opt/fzf/shell/key-bindings.zsh" ]] &&
+    source "$BREW_PREFIX/opt/fzf/shell/key-bindings.zsh"
 fi
 
 # completion system

@@ -17,7 +17,6 @@
 
 [core]
 	pager = delta
-	hooksPath = /Users/simonbjerkas/.dotfiles/hooks
 
 [delta]
 	line-numbers = true
