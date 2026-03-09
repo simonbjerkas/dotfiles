@@ -3,3 +3,4 @@
 *.swo
 .zcompdump
 .zcompcache
+.zsh_history
