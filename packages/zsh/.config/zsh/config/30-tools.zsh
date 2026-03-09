@@ -5,7 +5,7 @@ command -v zoxide >/dev/null && eval "$(zoxide init zsh)"
 
 export GPG_TTY="$(tty)"
 
-if command -v brew >/dev/null; then
+if [[ "$(uname -s)" == "Darwin" ]] && command -v brew >/dev/null 2>&1; then
   BREW_PREFIX="$(brew --prefix)"
 
   [[ -f "$BREW_PREFIX/opt/fzf/shell/completion.zsh" ]] &&

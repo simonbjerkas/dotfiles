@@ -1,10 +1,17 @@
 # dotfiles
 
-Personal dotfiles for macOS, managed with GNU Stow.
+Personal dotfiles managed with GNU Stow.
+
+## Platform support
+
+- macOS: full setup for personal machines
+- Linux: minimal setup for SSH sessions, VMs, and containers
+
+Linux support currently targets apt-based systems.
 
 ## Structure
 
-Configurations are grouped as Stow packages in `packages/`:
+Configurations are organized as Stow packages under `packages/`:
 
 - `bin`
 - `git`
@@ -18,13 +25,6 @@ Zsh is structured like this:
 - `~/.config/zsh/.zshenv` defines environment variables
 - `~/.config/zsh/.zshrc` loads interactive shell configuration
 
-## Requirements
-
-- macOS
-- Homebrew
-
-Most tools are installed through the included `Brewfile`.
-
 ## Installation
 
 Clone the repo and run the installer:
@@ -35,17 +35,17 @@ cd ~/.dotfiles
 ./install.sh
 ```
 
-The install script will:
+The installer will detect the platform automatically:
 
-- install Homebrew if needed
-
-- apply the Brewfile
-
-- stow all packages into $HOME
-
-- install and configure Rust
-
-- start a fresh login shell
+- macOS
+    - installs Homebrew if needed
+    - applies the Brewfile
+    - stows all packages
+    - install and configures Rust
+- Linux
+    - supports apt-based systems
+    - installs a minimal set of CLI tools
+    - stows all packages
 
 ## Updating
 
@@ -58,8 +58,9 @@ cd ~/.dotfiles
 
 ## Notes
 
-- Dotfiles are symlinked into $HOME using GNU Stow.
+- Dotfiles are symlinked into `$HOME` using GNU Stow
+- The macOS `Brewfile` is maintained manually as a curated base setup.
+- Zsh plugins are vendored in the repo
+- Powerlevel10k is enabled on macOS only
+- Linux is intentionally kept minimal and remote-firendly.
 
-- Homebrew works on both Apple Silicon and Intel macOS.
-
-- The Brewfile is maintained manually as a curated base setup.

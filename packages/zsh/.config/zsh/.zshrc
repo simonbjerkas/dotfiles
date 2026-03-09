@@ -9,4 +9,6 @@ for file in "$ZSH_CONFIG_DIR"/*.zsh(.N); do
   source "$file"
 done
 
-[[ -f "${ZDOTDIR}/.p10k.zsh" ]] && source "${ZDOTDIR}/.p10k.zsh"
+if [[ "$(uname -s)" == "Darwin" && -f "${ZDOTDIR}/.p10k.zsh" ]]; then
+  source "${ZDOTDIR}/.p10k.zsh"
+fi
