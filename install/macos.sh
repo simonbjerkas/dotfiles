@@ -105,6 +105,17 @@ else
 fi
 
 run_step "Setting default Rust toolchain to stable" rustup default stable
+run_step "Adding Rust components" rustup component add rustfmt rust-analyzer clippy
+
+section "Installing Python tools"
+
+run_step "Installing ruff via uv" uv tool install ruff
+
+section "Installing npm globals"
+
+run_step_shell \
+  "Installing prettier, prettierd and biome" \
+  "npm install -g prettier @fsouza/prettierd @biomejs/biome"
 
 section "Finished"
 success "Dotfiles installation complete"
