@@ -1,13 +1,10 @@
 bat
-curl
 ca-certificates
+curl
 eza
 fd-find
-fzf
 git
-jq
 neovim
 ripgrep
 stow
-zoxide
 zsh
