@@ -15,6 +15,7 @@ return {
       { '<leader>t', group = '[T]oggle' },
       { '<leader>h', group = 'Git [H]unk', mode = { 'n', 'v' } },
       { '<leader>x', group = 'Trouble' },
+      { '<leader>e', group = '[E]xplorer' },
     },
   },
 }

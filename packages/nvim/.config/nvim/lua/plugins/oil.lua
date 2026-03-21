@@ -24,6 +24,9 @@ return {
     -- Open parent directory in current window
     vim.keymap.set('n', '-', '<CMD>Oil<CR>', { desc = 'Open parent directory' })
 
+    -- Open oil at cwd
+    vim.keymap.set('n', '<leader>e', function() require('oil').open(vim.fn.getcwd()) end, { desc = 'Open [E]xplorer' })
+
     -- Open parent directory in floating window
     vim.keymap.set('n', '<space>-', require('oil').toggle_float, { desc = 'Open floating view of parent directory' })
   end,
