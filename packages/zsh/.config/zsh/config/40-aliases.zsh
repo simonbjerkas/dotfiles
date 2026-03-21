@@ -20,6 +20,10 @@ alias ..="cd .."
 alias ...="cd ../.."
 alias ....="cd ../../.."
 
+# ide
+alias vi="nvim ."
+alias vim="nvim ."
+
 # save me from mistyping
 alias sl="ls"
 
