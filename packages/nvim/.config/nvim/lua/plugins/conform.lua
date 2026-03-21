@@ -40,6 +40,12 @@ return {
         prettier = exe 'prettier',
         ruff_format = exe 'ruff',
         ruff_organize_imports = exe 'ruff',
+        -- biome only runs when biome.json/biome.jsonc exists in the project root,
+        -- so projects with .prettierrc naturally fall through to prettierd/prettier.
+        biome = {
+          condition = function() return vim.fn.executable 'biome' == 1 end,
+          require_cwd = true,
+        },
       }
     end)(),
     formatters_by_ft = {
@@ -48,12 +54,14 @@ return {
 
       python = { 'ruff_format', 'ruff_organize_imports' },
 
-      javascript = { 'prettierd', 'prettier', stop_after_first = true },
-      javascriptreact = { 'prettierd', 'prettier', stop_after_first = true },
-      typescript = { 'prettierd', 'prettier', stop_after_first = true },
-      typescriptreact = { 'prettierd', 'prettier', stop_after_first = true },
+      javascript = { 'biome', 'prettierd', 'prettier', stop_after_first = true },
+      javascriptreact = { 'biome', 'prettierd', 'prettier', stop_after_first = true },
+      typescript = { 'biome', 'prettierd', 'prettier', stop_after_first = true },
+      typescriptreact = { 'biome', 'prettierd', 'prettier', stop_after_first = true },
+      css = { 'biome', 'prettierd', 'prettier', stop_after_first = true },
 
-      json = { 'prettierd', 'prettier', stop_after_first = true },
+      json = { 'biome', 'prettierd', 'prettier', stop_after_first = true },
+      jsonc = { 'biome', 'prettierd', 'prettier', stop_after_first = true },
       yaml = { 'prettierd', 'prettier', stop_after_first = true },
       markdown = { 'prettierd', 'prettier', stop_after_first = true },
 
