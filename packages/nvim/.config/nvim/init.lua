@@ -426,10 +426,15 @@ local plugins = {
         end,
       })
 
+      -- Each server entry has an optional `_exe` field with the binary name.
+      -- The server is only enabled if that binary is found on PATH, so the
+      -- config naturally adapts to whatever the current environment has installed
+      -- (useful for containers where only relevant toolchains are present).
       local servers = {
-        -- pyright = {},
+        -- pyright = { _exe = 'pyright' },
 
         rust_analyzer = {
+          _exe = 'rust-analyzer',
           settings = {
             ['rust-analyzer'] = {
               cargo = {
@@ -450,11 +455,10 @@ local plugins = {
         --    https://github.com/pmizio/typescript-tools.nvim
         --
         -- But for many setups, the LSP (`ts_ls`) will work just fine
-        -- ts_ls = {},
-
-        stylua = {}, -- Used to format Lua code
+        -- ts_ls = { _exe = 'typescript-language-server' },
 
         lua_ls = {
+          _exe = 'lua-language-server',
           on_init = function(client)
             if client.workspace_folders then
               local path = client.workspace_folders[1].name
@@ -485,72 +489,19 @@ local plugins = {
         },
       }
 
-      local ensure_installed = vim.tbl_keys(servers or {})
-      vim.list_extend(ensure_installed, {
-        -- Add other tools here that you want Mason to install
-      })
-
-      require('mason-tool-installer').setup { ensure_installed = ensure_installed }
+      -- Mason is available as a manual tool installer (:Mason) but does not
+      -- auto-install anything. Servers are enabled based on what is on PATH.
+      require('mason-tool-installer').setup { ensure_installed = {} }
 
       for name, server in pairs(servers) do
-        vim.lsp.config(name, server)
-        vim.lsp.enable(name)
+        local exe = server._exe
+        local config = vim.tbl_extend('force', server, { _exe = nil })
+        if not exe or vim.fn.executable(exe) == 1 then
+          vim.lsp.config(name, config)
+          vim.lsp.enable(name)
+        end
       end
     end,
-  },
-
-  { -- Autoformat
-    'stevearc/conform.nvim',
-    event = { 'BufWritePre' },
-    cmd = { 'ConformInfo' },
-    keys = {
-      {
-        '<leader>f',
-        function()
-          require('conform').format { async = true, lsp_format = 'fallback' }
-        end,
-        mode = '',
-        desc = '[F]ormat buffer',
-      },
-    },
-    ---@module 'conform'
-    ---@type conform.setupOpts
-    opts = {
-      notify_on_error = false,
-      format_on_save = function(bufnr)
-        -- Disable "format_on_save lsp_fallback" for languages that don't
-        -- have a well standardized coding style. You can add additional
-        -- languages here or re-enable it for the disabled ones.
-        local disable_filetypes = { c = true, cpp = true }
-        if disable_filetypes[vim.bo[bufnr].filetype] then
-          return nil
-        else
-          return {
-            timeout_ms = 500,
-            lsp_format = 'fallback',
-          }
-        end
-      end,
-      formatters_by_ft = {
-        lua = { 'stylua' },
-        rust = { 'rustfmt' },
-
-        python = { 'ruff_format', 'ruff_organize_imports' },
-
-        javascript = { 'prettierd', 'prettier', stop_after_first = true },
-        javascriptreact = { 'prettierd', 'prettier', stop_after_first = true },
-        typescript = { 'prettierd', 'prettier', stop_after_first = true },
-        typescriptreact = { 'prettierd', 'prettier', stop_after_first = true },
-
-        json = { 'prettierd', 'prettier', stop_after_first = true },
-        yaml = { 'prettierd', 'prettier', stop_after_first = true },
-        markdown = { 'prettierd', 'prettier', stop_after_first = true },
-
-        sh = { 'shfmt' },
-        bash = { 'shfmt' },
-        zsh = { 'shfmt' },
-      },
-    },
   },
 
   { -- Autocompletion
