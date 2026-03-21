@@ -426,15 +426,25 @@ local plugins = {
         end,
       })
 
-      -- Enable the following language servers
-      --  Feel free to add/remove any LSPs that you want here. They will automatically be installed.
-      --  See `:help lsp-config` for information about keys and how to configure
-      ---@type table<string, vim.lsp.Config>
       local servers = {
-        -- clangd = {},
-        -- gopls = {},
         -- pyright = {},
-        -- rust_analyzer = {},
+
+        rust_analyzer = {
+          settings = {
+            ['rust-analyzer'] = {
+              cargo = {
+                allFeatures = true,
+              },
+              check = {
+                command = 'clippy',
+              },
+              procMacro = {
+                enable = true,
+              },
+            },
+          },
+        },
+
         --
         -- Some languages (like typescript) have entire language plugins that can be useful:
         --    https://github.com/pmizio/typescript-tools.nvim
@@ -444,7 +454,6 @@ local plugins = {
 
         stylua = {}, -- Used to format Lua code
 
-        -- Special Lua Config, as recommended by neovim help docs
         lua_ls = {
           on_init = function(client)
             if client.workspace_folders then
@@ -476,16 +485,9 @@ local plugins = {
         },
       }
 
-      -- Ensure the servers and tools above are installed
-      --
-      -- To check the current status of installed tools and/or manually install
-      -- other tools, you can run
-      --    :Mason
-      --
-      -- You can press `g?` for help in this menu.
       local ensure_installed = vim.tbl_keys(servers or {})
       vim.list_extend(ensure_installed, {
-        -- You can add other tools here that you want Mason to install
+        -- Add other tools here that you want Mason to install
       })
 
       require('mason-tool-installer').setup { ensure_installed = ensure_installed }
@@ -531,11 +533,22 @@ local plugins = {
       end,
       formatters_by_ft = {
         lua = { 'stylua' },
-        -- Conform can also run multiple formatters sequentially
-        -- python = { "isort", "black" },
-        --
-        -- You can use 'stop_after_first' to run the first available formatter from the list
-        -- javascript = { "prettierd", "prettier", stop_after_first = true },
+        rust = { 'rustfmt' },
+
+        python = { 'ruff_format', 'ruff_organize_imports' },
+
+        javascript = { 'prettierd', 'prettier', stop_after_first = true },
+        javascriptreact = { 'prettierd', 'prettier', stop_after_first = true },
+        typescript = { 'prettierd', 'prettier', stop_after_first = true },
+        typescriptreact = { 'prettierd', 'prettier', stop_after_first = true },
+
+        json = { 'prettierd', 'prettier', stop_after_first = true },
+        yaml = { 'prettierd', 'prettier', stop_after_first = true },
+        markdown = { 'prettierd', 'prettier', stop_after_first = true },
+
+        sh = { 'shfmt' },
+        bash = { 'shfmt' },
+        zsh = { 'shfmt' },
       },
     },
   },
