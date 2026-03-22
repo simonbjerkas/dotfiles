@@ -10,3 +10,4 @@ export RUSTUP_HOME="$XDG_DATA_HOME/rustup"
 
 export NPM_CONFIG_USERCONFIG="$XDG_CONFIG_HOME/npm/npmrc"
 export NPM_CONFIG_CACHE="$XDG_CACHE_HOME/npm"
+. "/Users/simonbjerkas/.local/share/bob/env/env.sh"

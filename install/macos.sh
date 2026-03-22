@@ -30,7 +30,7 @@ success "Created base directories"
 BREWFILE="$DOTFILES/install/Brewfile"
 
 [[ -f "$BREWFILE" ]] || {
-  echo "Brewfile not found at $BREWFILE"
+  warn "Brewfile not found at $BREWFILE"
   exit 1
 }
 
@@ -70,6 +70,10 @@ command -v stow >/dev/null 2>&1 || {
   exit 1
 }
 
+command -v bob >/dev/null 2>&1 || {
+  error "bob version manager is not installed"
+}
+
 section "Stowing dotfiles"
 
 for pkg_path in "$DOTFILES/packages"/*; do
@@ -83,6 +87,17 @@ for pkg_path in "$DOTFILES/packages"/*; do
     --restow \
     "$pkg"
 done
+
+section "Ensuring Neovim setup"
+
+if ! command -v nvim >/dev/null 2>&1; then
+  warn "nvim not installed - installing it now"
+  run_step_shell \
+    "Installing neovim" \
+    bob install stable && bob use nightly
+else
+  success "neovim already installed"
+fi
 
 section "Ensuring Rust toolchain"
 
