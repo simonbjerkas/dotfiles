@@ -21,8 +21,8 @@ alias ...="cd ../.."
 alias ....="cd ../../.."
 
 # ide
-alias vi="nvim ."
-alias vim="nvim ."
+alias vi="nvim"
+alias vim="nvim"
 
 # save me from mistyping
 alias sl="ls"
