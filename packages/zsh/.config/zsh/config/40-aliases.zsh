@@ -20,6 +20,11 @@ alias ..="cd .."
 alias ...="cd ../.."
 alias ....="cd ../../.."
 
+# zoxide
+alias za='zoxide add'
+alias zq='zoxide query'
+alias zr='zoxide remove'
+
 # ide
 alias vi="nvim"
 alias vim="nvim"

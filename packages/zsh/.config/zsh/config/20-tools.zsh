@@ -2,6 +2,19 @@ export HOMEBREW_INSTALL_CLEANUP=1
 export GPG_TTY="$(tty)"
 
 command -v mise >/dev/null 2>&1 && eval "$(mise activate zsh)"
+
+# zoxide
+export _ZO_ECHO=1
+export _ZO_MAXAGE=5000
+export _ZO_DATA_DIR="$HOME/.local/share/zoxide"
+export _ZO_EXCLUDE_DIRS="\
+$HOME:$HOME/Downloads:/tmp/**:$HOME/.cache/**:\
+**/node_modules/**:\
+**/site-packages/**:**/dist-packages/**:\
+**/.venv/**:**/venv/**:**/__pycache__/**:\
+**/target/**:$HOME/.cargo/registry/**:\
+**/vendor/**:\
+**/.git/**:$HOME/Library/**"
 command -v zoxide >/dev/null 2>&1 && eval "$(zoxide init zsh)"
 
 if [[ "$OS" == "macos" ]] && command -v brew >/dev/null 2>&1; then
