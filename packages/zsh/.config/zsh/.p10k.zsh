@@ -34,7 +34,6 @@
     command_execution_time
     virtualenv
     context
-    time
   )
 
   typeset -g POWERLEVEL9K_BACKGROUND=
