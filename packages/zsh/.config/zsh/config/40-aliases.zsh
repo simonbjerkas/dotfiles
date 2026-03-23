@@ -27,18 +27,6 @@ alias vim="nvim"
 # save me from mistyping
 alias sl="ls"
 
-# git
-alias g="git"
-alias gs="git status"
-alias ga="git add"
-alias gc="git commit"
-alias gm="git commit -m"
-alias gp="git push"
-alias gl="git pull"
-alias gd="git diff"
-alias gb="git branch"
-alias gco="git checkout"
-
 # update environment
 alias update="brew update && brew upgrade && mise upgrade"
 
