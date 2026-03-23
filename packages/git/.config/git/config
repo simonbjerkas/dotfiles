@@ -3,7 +3,7 @@
 	email = simon.bjerkas10@gmail.com
 
 [pull]
-	rebase = false
+	ff = only
 
 [init]
 	defaultBranch = main
@@ -14,12 +14,32 @@
 
 [alias]
 	undo = reset --soft HEAD^
+	ss = "!f() { git stash show stash^{/$*} -p; }; f"
+	sa = "!f() { git stash apply stash^{/$*}; }; f"
+	sl = stash list
 
 [core]
 	pager = delta
+	editor = nvim
+
+[merge]
+	tool = nvim -d
 
 [delta]
 	line-numbers = true
+
+[diff]
+	algorithm = histogram
+	indentHeuristic = true
+
+[protocol]
+	version = 2
+
+[help]
+	autocorrect = prompt
+
+[url "git@github.com:"]
+	insteadOf = gh:
 
 [color]
 	ui = auto
