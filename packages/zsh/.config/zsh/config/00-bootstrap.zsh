@@ -13,7 +13,6 @@ bindkey '^n' history-search-forward
 
 # History
 HISTSIZE=5000
-HISTFILE="${ZDOTDIR}/.zsh_history"
 SAVEHIST=$HISTSIZE
 HISTDUP=erase
 setopt appendhistory

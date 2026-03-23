@@ -25,6 +25,12 @@ alias za='zoxide add'
 alias zq='zoxide query'
 alias zr='zoxide remove'
 
+# tmux
+alias ta='tmux attach -t'
+alias tn='tmux new -s'
+alias tl='tmux ls'
+alias tk='tmux kill-session -t'
+
 # ide
 alias vi="nvim"
 alias vim="nvim"

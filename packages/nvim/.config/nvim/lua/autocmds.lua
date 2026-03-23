@@ -1,3 +1,12 @@
+if vim.env.TMUX then
+  vim.api.nvim_create_autocmd({ 'VimEnter', 'VimResume' }, {
+    callback = function() vim.fn.system('tmux set status off') end,
+  })
+  vim.api.nvim_create_autocmd({ 'VimLeave', 'VimSuspend' }, {
+    callback = function() vim.fn.system('tmux set status on') end,
+  })
+end
+
 vim.api.nvim_create_autocmd('VimEnter', {
   once = true,
   callback = function()

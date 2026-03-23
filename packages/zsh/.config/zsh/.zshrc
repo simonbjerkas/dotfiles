@@ -1,3 +1,8 @@
+# Auto-start tmux — must run before p10k hijacks the terminal
+if command -v tmux &>/dev/null && [[ -z "$TMUX" ]]; then
+  tmux attach 2>/dev/null || tmux new -s main
+fi
+
 # Powerlevel10k instant prompt (must stay near top)
 if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
