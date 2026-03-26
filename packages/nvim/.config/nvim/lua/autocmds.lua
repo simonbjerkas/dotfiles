@@ -1,11 +1,9 @@
-if vim.env.TMUX then
-  vim.api.nvim_create_autocmd({ 'VimEnter', 'VimResume' }, {
-    callback = function() vim.fn.system('tmux set status off') end,
-  })
-  vim.api.nvim_create_autocmd({ 'VimLeave', 'VimSuspend' }, {
-    callback = function() vim.fn.system('tmux set status on') end,
-  })
-end
+-- Set guicursor to blinking bar before exit so neovim's own cleanup emits the right sequence
+vim.api.nvim_create_autocmd('VimLeave', {
+  callback = function()
+    vim.opt.guicursor = 'a:ver25-blinkon1'
+  end,
+})
 
 vim.api.nvim_create_autocmd('VimEnter', {
   once = true,
