@@ -14,8 +14,7 @@ return {
     end
 
     lint.linters_by_ft = {
-      markdown = { 'markdownlint' },
-      python = if_exe 'ruff',
+      markdown = if_exe 'markdownlint',
       sh = if_exe 'shellcheck',
       bash = if_exe 'shellcheck',
       lua = if_exe 'luacheck',
@@ -24,7 +23,6 @@ return {
       javascriptreact = if_exe('biome', 'biomejs'),
       typescript = if_exe('biome', 'biomejs'),
       typescriptreact = if_exe('biome', 'biomejs'),
-      -- Rust: rust_analyzer runs clippy inline via LSP, no separate linter needed
     }
 
     local lint_augroup = vim.api.nvim_create_augroup('lint', { clear = true })

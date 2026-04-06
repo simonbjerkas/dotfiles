@@ -100,7 +100,6 @@ else
 fi
 
 section "Ensuring Rust toolchain"
-
 if ! command -v rustup >/dev/null 2>&1; then
   warn "rustup not found — installing it now"
   run_step_shell \
@@ -123,14 +122,7 @@ run_step "Setting default Rust toolchain to stable" rustup default stable
 run_step "Adding Rust components" rustup component add rustfmt rust-analyzer clippy
 
 section "Installing Python tools"
-
-run_step "Installing ruff via uv" uv tool install ruff
-
-section "Installing npm globals"
-
-run_step_shell \
-  "Installing prettier, prettierd and biome" \
-  "npm install -g prettier @fsouza/prettierd @biomejs/biome"
+run_step "Installing ruff via uv" uv tool install ruff basedpyright
 
 section "Finished"
 success "Dotfiles installation complete"
