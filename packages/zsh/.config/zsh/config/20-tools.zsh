@@ -1,7 +1,7 @@
 export HOMEBREW_INSTALL_CLEANUP=1
 export GPG_TTY="$(tty)"
 
-command -v mise >/dev/null 2>&1 && eval "$(mise activate zsh)"
+command -v fnm >/dev/null 2>&1 && eval "$(fnm env --use-on-cd --shell zsh)"
 
 # zoxide
 export _ZO_ECHO=1

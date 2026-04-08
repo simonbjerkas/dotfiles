@@ -39,7 +39,7 @@ alias vim="nvim"
 alias sl="ls"
 
 # update environment
-alias update="brew update && brew upgrade && mise upgrade"
+alias update="brew update && brew upgrade"
 
 # reload shell
 alias reload="exec zsh"

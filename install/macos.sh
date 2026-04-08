@@ -99,6 +99,14 @@ else
   success "neovim already installed"
 fi
 
+section "Ensuring Node.js"
+if ! fnm list 2>/dev/null | grep -q "lts-latest"; then
+  run_step "Installing Node.js LTS" fnm install --lts
+  run_step "Setting Node.js LTS as default" fnm default lts-latest
+else
+  success "Node.js LTS already installed"
+fi
+
 section "Ensuring Rust toolchain"
 if ! command -v rustup >/dev/null 2>&1; then
   warn "rustup not found — installing it now"
@@ -122,7 +130,8 @@ run_step "Setting default Rust toolchain to stable" rustup default stable
 run_step "Adding Rust components" rustup component add rustfmt rust-analyzer clippy
 
 section "Installing Python tools"
-run_step "Installing ruff via uv" uv tool install ruff basedpyright
+run_step "Installing ruff via uv" uv tool install ruff
+run_step "Installing basedpyright via uv" uv tool install basedpyright
 
 section "Finished"
 success "Dotfiles installation complete"
