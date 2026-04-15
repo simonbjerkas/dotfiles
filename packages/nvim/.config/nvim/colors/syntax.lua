@@ -357,28 +357,10 @@ hi('tomlBoolean',    { fg = c.lime })
 hi('tomlDate',       { fg = c.type })
 hi('tomlComment',    { fg = c.comment })
 
--- Language Fallback — Python
-hi('pythonDecorator',     { fg = c.gold })
-hi('pythonDecoratorName', { fg = c.gold })
-hi('pythonBuiltin',       { fg = c.salmon })
-hi('pythonException',     { fg = c.salmon })
-hi('pythonExceptions',    { fg = c.type })
-hi('pythonString',        { fg = c.green })
-hi('pythonFString',       { fg = c.green })
-hi('pythonNumber',        { fg = c.gold })
-
 -- Language Fallback — Rust
-hi('Trait',              { fg = c.type,   italic = true })
-hi('rustAttribute',      { link = 'Macro' })
+-- Only keeping things with no standard treesitter/LSP equivalent
+hi('Trait',              { fg = c.type,   italic = true })  -- base group, used as link target
+hi('rustAttribute',      { link = 'Macro' })                -- #[derive(...)]
 hi('rustDerive',         { link = 'Trait' })
-hi('rustModPath',        { link = 'Identifier' })
-hi('rustFuncCall',       { link = 'Function' })
-hi('rustFuncName',       { link = 'Function' })
-hi('rustCommentLineDoc', { link = 'Comment' })
-hi('rustAssert',         { link = 'Macro' })
-hi('rustPanic',          { link = 'Macro' })
+hi('rustLifetime',       { fg = c.salmon, italic = true })  -- 'a lifetimes (truly unique syntax)
 hi('rustMacro',          { link = 'Macro' })
-hi('rustSigil',          { fg = c.lime })
-hi('rustLifetime',       { fg = c.salmon, italic = true })
-hi('rustEnumVariant',    { fg = c.cyan })
-hi('rustMacroVariable',  { fg = c.gold })

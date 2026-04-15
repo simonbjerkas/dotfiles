@@ -182,5 +182,15 @@ return {
     vim.lsp.config('tombi', {
       filetypes = { 'toml' },
     })
+
+    -- Any server installed via :MasonInstall is enabled automatically.
+    -- vim.lsp.config() calls above are applied before this runs.
+    require('mason-lspconfig').setup {
+      handlers = {
+        function(server_name)
+          vim.lsp.enable(server_name)
+        end,
+      },
+    }
   end,
 }

@@ -20,24 +20,6 @@ return {
   ---@module 'conform'
   ---@type conform.setupOpts
   opts = function()
-    local prettier_files = {
-      '.prettierrc',
-      '.prettierrc.json',
-      '.prettierrc.yml',
-      '.prettierrc.yaml',
-      '.prettierrc.json5',
-      '.prettierrc.js',
-      '.prettierrc.cjs',
-      '.prettierrc.mjs',
-      'prettier.config.js',
-      'prettier.config.cjs',
-      'prettier.config.mjs',
-    }
-
-    local function has_root_file(bufnr, files)
-      return vim.fs.root(bufnr, files) ~= nil
-    end
-
     local function exe(name)
       return function()
         return vim.fn.executable(name) == 1
@@ -86,14 +68,10 @@ return {
           end,
         },
         prettierd = {
-          condition = function(_, ctx)
-            return vim.fn.executable 'prettierd' == 1 and has_root_file(ctx.buf, prettier_files)
-          end,
+          condition = exe 'prettierd',
         },
         prettier = {
-          condition = function(_, ctx)
-            return vim.fn.executable 'prettier' == 1 and has_root_file(ctx.buf, prettier_files)
-          end,
+          condition = exe 'prettier',
         },
       },
       formatters_by_ft = {
