@@ -18,11 +18,7 @@ return {
       sh = if_exe 'shellcheck',
       bash = if_exe 'shellcheck',
       lua = if_exe 'luacheck',
-      -- biome covers linting for JS/TS (nvim-lint name is 'biomejs')
-      javascript = if_exe('biome', 'biomejs'),
-      javascriptreact = if_exe('biome', 'biomejs'),
-      typescript = if_exe('biome', 'biomejs'),
-      typescriptreact = if_exe('biome', 'biomejs'),
+      -- JS/TS linting comes from biome's LSP (configured in lsp.lua)
     }
 
     local lint_augroup = vim.api.nvim_create_augroup('lint', { clear = true })

@@ -111,6 +111,8 @@ return {
 
     enable_if_present('ruff', 'ruff')
 
+    enable_if_present('biome', 'biome')
+
     enable_if_present('basedpyright', 'basedpyright-langserver', {
       settings = {
         basedpyright = {

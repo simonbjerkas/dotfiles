@@ -20,10 +20,32 @@ return {
   ---@module 'conform'
   ---@type conform.setupOpts
   opts = function()
+    local prettier_files = {
+      '.prettierrc',
+      '.prettierrc.json',
+      '.prettierrc.yml',
+      '.prettierrc.yaml',
+      '.prettierrc.json5',
+      '.prettierrc.js',
+      '.prettierrc.cjs',
+      '.prettierrc.mjs',
+      'prettier.config.js',
+      'prettier.config.cjs',
+      'prettier.config.mjs',
+    }
+
     local function exe(name)
       return function()
         return vim.fn.executable(name) == 1
       end
+    end
+
+    local function has_prettier(_, ctx)
+      return vim.fs.root(ctx.buf, prettier_files) ~= nil
+    end
+
+    local function has_biome_no_prettier(self, ctx)
+      return vim.fn.executable 'biome' == 1 and not has_prettier(self, ctx)
     end
 
     return {
@@ -44,34 +66,24 @@ return {
         }
       end,
       formatters = {
-        stylua = {
-          condition = exe 'stylua',
-        },
-        shfmt = {
-          condition = exe 'shfmt',
-        },
-        rustfmt = {
-          condition = exe 'rustfmt',
-        },
-        ruff_format = {
-          condition = exe 'ruff',
-        },
-        ruff_organize_imports = {
-          condition = exe 'ruff',
-        },
-        biome = {
-          condition = function(_, ctx)
-            return vim.fn.executable 'biome' == 1 and has_root_file(ctx.buf, {
-              'biome.json',
-              'biome.jsonc',
-            })
+        stylua = { condition = exe 'stylua' },
+        shfmt = { condition = exe 'shfmt' },
+        rustfmt = { condition = exe 'rustfmt' },
+        ruff_format = { condition = exe 'ruff' },
+        ruff_organize_imports = { condition = exe 'ruff' },
+        -- biome runs when no prettier config is present; biome-organize-imports
+        -- uses --assist-enabled=true to sort imports (Biome 2.x assist module)
+        biome = { condition = has_biome_no_prettier },
+        ['biome-organize-imports'] = { condition = has_biome_no_prettier },
+        prettierd = {
+          condition = function(self, ctx)
+            return vim.fn.executable 'prettierd' == 1 and has_prettier(self, ctx)
           end,
         },
-        prettierd = {
-          condition = exe 'prettierd',
-        },
         prettier = {
-          condition = exe 'prettier',
+          condition = function(self, ctx)
+            return vim.fn.executable 'prettier' == 1 and has_prettier(self, ctx)
+          end,
         },
       },
       formatters_by_ft = {
@@ -80,24 +92,16 @@ return {
 
         python = { 'ruff_format', 'ruff_organize_imports' },
 
-        javascript = { 'biome', 'prettierd', 'prettier', stop_after_first = true },
-        javascriptreact = {
-          'biome',
-          'prettierd',
-          'prettier',
-          stop_after_first = true,
-        },
-        typescript = { 'biome', 'prettierd', 'prettier', stop_after_first = true },
-        typescriptreact = {
-          'biome',
-          'prettierd',
-          'prettier',
-          stop_after_first = true,
-        },
-        css = { 'biome', 'prettierd', 'prettier', stop_after_first = true },
+        -- Conditions on each formatter handle the prettier-vs-biome choice:
+        -- prettier/prettierd run when a prettier config exists, biome otherwise.
+        javascript = { 'prettierd', 'prettier', 'biome', 'biome-organize-imports' },
+        javascriptreact = { 'prettierd', 'prettier', 'biome', 'biome-organize-imports' },
+        typescript = { 'prettierd', 'prettier', 'biome', 'biome-organize-imports' },
+        typescriptreact = { 'prettierd', 'prettier', 'biome', 'biome-organize-imports' },
+        css = { 'prettierd', 'prettier', 'biome', 'biome-organize-imports' },
 
-        json = { 'biome', 'prettierd', 'prettier', stop_after_first = true },
-        jsonc = { 'biome', 'prettierd', 'prettier', stop_after_first = true },
+        json = { 'prettierd', 'prettier', 'biome', 'biome-organize-imports' },
+        jsonc = { 'prettierd', 'prettier', 'biome', 'biome-organize-imports' },
         yaml = { 'prettierd', 'prettier', stop_after_first = true },
         markdown = { 'prettierd', 'prettier', stop_after_first = true },
 

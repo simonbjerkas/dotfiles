@@ -28,3 +28,11 @@ done
 if [[ "$(uname -s)" == "Darwin" && -f "${ZDOTDIR}/.p10k.zsh" ]]; then
   source "${ZDOTDIR}/.p10k.zsh"
 fi
+
+# pnpm
+export PNPM_HOME="/Users/simonbjerkas/.local/share/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME:"*) ;;
+  *) export PATH="$PNPM_HOME:$PATH" ;;
+esac
+# pnpm end
